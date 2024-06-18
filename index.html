@@ -1,0 +1,1367 @@
+<!doctype html>
+<html>
+		<head>
+				<meta charset="UTF-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="shortcut icon" href="https://img0.baidu.com/it/u=40018911,1933388772&fm=253&fmt=auto&app=138&f=JPEG?w=615&h=500" type="image/x-icon">
+		<link rel="icon" href="https://img0.baidu.com/it/u=40018911,1933388772&fm=253&fmt=auto&app=138&f=JPEG?w=615&h=500" type="image/x-icon">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>亚马逊工具集</title>
+		<style>
+			body{
+				display: flex;
+				flex-wrap: wrap;
+				margin:0px;
+				height:100vh;
+			}
+			.top{height:5%;width:100%;background-color:#00800030;}
+			.middle{height:80%;width:100%;display:flex;}
+			.footer{height:15%;width:100%;background-color:#0900ff30;}
+			ul{padding:0px;}
+			.left{
+				flex: 0 0 20%;
+				max-width: 20%;
+				height:100%;
+				background-color:#ff000030;
+			}
+			.right{
+				flex: 0 0 80%;
+				max-width: 80%;
+				height:100%;
+				background-color:#ffff0030;
+			}
+			li {
+				list-style-type: none;
+				margin:15px 0px;
+					display: flex;
+				flex-flow: column;
+			}
+			.menu li button{
+				color: #fff;
+				background-color: #007bff;
+				border-color: #007bff;
+				padding: .375rem .75rem;
+				width: 70%;
+				margin: 0 auto;
+				font-size: 1rem;
+				line-height: 1.5;
+				border-radius: .5rem;
+			}
+			.menu li button:hover{background-color:red !important;color: white !important;}
+		</style>
+		<style>
+			.right{display:none;}
+			.right:nth-of-type(2){display:block;}
+			.menu li:first-of-type button{background-color:red;}
+			.top-left{
+				position: fixed;
+				left:50%;
+				transform:translate(-50%,0%);
+				z-index:1000;
+				color: #fff;
+				font: 1.5em Brush Script MT;
+				text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+			}
+			.top-right{float:right;}
+		</style>
+	</head>
+		<div class="top">
+			<div class="top-left">酷玩亚马逊工具箱 - 美国站</div>
+			<div class="top-right">酷玩亚马逊工具箱 - 美国站</div>
+		</div>
+		<div class="middle">
+			<div class="left">
+				<ul class="menu">
+					<li><button onclick="change(0)">FBA计算器</button></li>
+					<li><button onclick="change(1)">单位换算(美)</button></li>
+					<li><button onclick="change(2)">排名查销量</button></li>
+					<li><button onclick="change(3)">ASIN查销量</button></li>
+					<li><button onclick="change(4)">鞋码对照表</button></li>
+					<li><button onclick="change(5)">女装尺码表</button></li>
+					<li><button onclick="change(6)">在线计算器</button></li>
+					<li><button onclick="change(7)">UPC生成器</button></li>
+					<li><button onclick="change(8)">自助购买</button></li>
+					<script><!--左侧按钮切换-->
+						function change(which){
+							for(i=0;i<document.getElementsByClassName("menu")[0].getElementsByTagName("li").length;i++){
+								if(which==i){
+									document.getElementsByClassName("menu")[0].getElementsByTagName("li")[i].getElementsByTagName("button")[0].style.backgroundColor="red";
+									document.getElementsByClassName("right")[i].style.display="block";
+								}else{
+									document.getElementsByClassName("menu")[0].getElementsByTagName("li")[i].getElementsByTagName("button")[0].style.backgroundColor="#007bff";
+									document.getElementsByClassName("right")[i].style.display="none";
+								}
+							}
+						}
+					</script>
+				</ul>
+			</div>
+			<div class="right"><!--FBA计算器-->
+				<style>
+					.{
+						font-family: "Microsoft YaHei", sans-serif;
+					}
+					#fba{
+						text-align:center;
+						border-collapse: separate;
+					}
+					#fba tr td:first-child{
+						 padding:0px 5px;
+					}
+					#fba tr td, #fba tr th, #fba tr td input {
+						height: 2em;
+						width:30%;
+					}
+					#fba tr td:nth-child(2), #fba tr th:nth-child(2), #fba tr td:nth-child(2) input,
+					#fba tr td:nth-child(3), #fba tr th:nth-child(3), #fba tr td:nth-child(3) input
+					{
+						width: 120px;
+						text-align:center;
+					}
+					#fba tr td:nth-child(4), #fba tr th:nth-child(4){
+						color:red;
+						text-align:center;
+					}
+					#fbaerr, #long_inerr, #width_inerr, #height_inerr, #weight_lberr, #long_inerr{
+						color:red;
+					}
+					input::-webkit-outer-spin-button,
+					input::-webkit-inner-spin-button{
+						-webkit-appearance: none !important;
+						margin: 0;
+					}
+					#fba tr td input {
+						border-bottom: 1px solid #2196F3;
+						transition: 0.5s;
+						border-radius:5px;
+						border:1px solid #ddd;
+						background-color:#00000000;
+					}
+					#fba tr td input:hover{
+						border:1px solid red;
+					}
+					.all button{
+						width: 100px;
+						border:1px solid #ddd;
+						margin: 4px auto;
+						text-align: center;
+						display: flex;
+						height: 35px;
+						flex-wrap: nowrap;
+						align-items: stretch;
+						flex-direction: column-reverse;
+						justify-content: center;
+						border-radius:12px;
+						font-weight: bold;
+						background-color: #fee299;
+					}
+					.all{
+						width:400px;
+						margin:2em 20%;
+					}
+				</style>
+				<div	class="all">
+					<table id="fba">
+						<tr><th></th><th>厘米 - CM</th><th>英寸 - IN</th><th></th></tr>
+						<tr><td>长</td><td><input type="number" id="long_cm"></td><td><input type="number" id="long_in"></td><td><div class="datashow" id="long_inerr"></div></td></tr>
+						<tr><td>宽</td><td><input type="number" id="width_cm"></td><td><input type="number" id="width_in"></td><td><div class="datashow" id="width_inerr"></div></td></tr>
+						<tr><td>高</td><td><input type="number" id="height_cm"></td><td><input type="number" id="height_in"></td><td><div class="datashow" id="height_inerr"></div></td></tr>
+						<tr><th></th><th>克 - G</th><th>磅 - LB</th><th></th></tr>
+						<tr><td>实重</td><td><input type="number" id="weight_g"></td><td><input type="number" id="weight_lb"></td><td><div class="datashow" id="weight_lberr"></div></td></tr>
+						<tr><td>体积重</td><td><input type="number" id="volume_g"></td><td><input type="number" id="volume_lb"></td><td><div class="datashow" id="long_inerr"></div></td></tr>
+						<tr><th></th><th>非低价</th><th>低价</th><th></th></tr>
+						<tr><td>标准</td><td><div id="bzfba"></div></td><td><div id="bzdjfba"></div></td><td></td></tr>
+						<tr><td>服装</td><td><div id="fzfba"></div></td><td><div id="fzdjfba"></div></td><td></td></tr>
+						<tr><td>危险</td><td><div id="wxfba"></div></td><td><div id="wxdjfba"></div></td><td></td></tr>
+						<tr><td></td><td colspan="3" id="fbaerr"></td></tr>
+					</table>
+					<button class="querybutton" id="queryFBA" onclick="queryFBA()">计算FBA</button>
+					<script>
+						document.addEventListener('DOMContentLoaded', function() {
+							var long_cm = document.getElementById('long_cm');
+							var long_in = document.getElementById('long_in');
+							var width_cm = document.getElementById('width_cm');
+							var width_in = document.getElementById('width_in');
+							var height_cm = document.getElementById('height_cm');
+							var height_in = document.getElementById('height_in');
+							var weight_g = document.getElementById('weight_g');
+							var weight_lb = document.getElementById('weight_lb');
+							var volume_g = document.getElementById('volume_g');
+							var volume_lb = document.getElementById('volume_lb');
+							function volume(){
+								var long_cm1 = document.getElementById('long_cm').value;
+								var long_in1 = document.getElementById('long_in').value;
+								var width_cm1 = document.getElementById('width_cm').value;
+								var width_in1 = document.getElementById('width_in').value;
+								var height_cm1 = document.getElementById('height_cm').value;
+								var height_in1 = document.getElementById('height_in').value;
+								var volume_g1 = document.getElementById('volume_g');
+								var volume_lb1 = document.getElementById('volume_lb');
+								if(long_cm1&&width_cm1&&height_cm1){
+									volume_g1.value = (long_cm1 * width_cm1 * height_cm1*453.59237/2277.801896).toFixed(3);
+									volume_lb1.value = (long_in1 * width_in1 * height_in1/139).toFixed(3);
+								}
+							}
+							long_cm.addEventListener('input', function() {
+								long_in.value = (this.value / 2.54).toFixed(3);
+								volume();
+							});
+							long_in.addEventListener('input', function() {
+								long_cm.value = (this.value * 2.54).toFixed(3);
+								volume();
+							});
+							width_cm.addEventListener('input', function() {
+								width_in.value = (this.value / 2.54).toFixed(3);
+								volume();
+							});
+							width_in.addEventListener('input', function() {
+								width_cm.value = (this.value * 2.54).toFixed(3);
+								volume();
+							});
+							height_cm.addEventListener('input', function() {
+								height_in.value = (this.value / 2.54).toFixed(3);
+								volume();
+							});
+							height_in.addEventListener('input', function() {
+								height_cm.value = (this.value * 2.54).toFixed(3);
+								volume();
+							});
+							weight_g.addEventListener('input', function() {
+								weight_lb.value = (this.value / 453.59237).toFixed(3);
+								volume();
+							});
+							weight_lb.addEventListener('input', function() {
+								weight_g.value = (this.value * 453.59237).toFixed(3);
+								volume();
+							});
+						});
+					</script>
+					<script> 
+						function queryFBA(){
+							document.getElementById('fbaerr').innerText = "";
+							let[long_insign, width_insign, height_insign, weight_lbsign] = [true,true,true,true]
+							var long_in = document.getElementById('long_in').value;
+							var width_in = document.getElementById('width_in').value;
+							var height_in = document.getElementById('height_in').value;
+							var weight_lb = document.getElementById('weight_lb').value;
+							var volume_lb = document.getElementById('volume_lb').value;
+							document.getElementById('long_inerr').innerText = (!long_in) ? "不能为空" : "";
+							long_insign = !long_in ? false : true;
+							if(long_insign){
+								document.getElementById('long_inerr').innerText = (long_in==0) ? "不能为0" : "";
+							}
+							if(long_in<0){
+								long_in = long_in*(-1);
+								document.getElementById('long_in').value=long_in;
+								document.getElementById('long_cm').value=document.getElementById('long_cm').value*(-1);
+							}
+							document.getElementById('width_inerr').innerText = (!width_in) ? "不能为空" : "";
+							width_insign = !width_in ? false : true;
+							if(width_insign){
+								document.getElementById('width_inerr').innerText = (width_in==0) ? "不能为0" : "";
+							}
+							if(width_in<0){
+								width_in = width_in*(-1);
+								document.getElementById('width_in').value=width_in;
+								document.getElementById('width_cm').value=document.getElementById('width_cm').value*(-1);
+							}
+							document.getElementById('height_inerr').innerText = (!height_in) ? "不能为空" : "";
+							height_insign = !height_in ? false : true;
+							if(height_insign){
+								document.getElementById('height_inerr').innerText = (height_in==0) ? "不能为0" : "";
+							}
+							if(height_in<0){
+								height_in = height_in*(-1);
+								document.getElementById('height_in').value=height_in;
+								document.getElementById('height_cm').value=document.getElementById('height_cm').value*(-1);
+							}
+							document.getElementById('weight_lberr').innerText = (!weight_lb) ? "不能为空" : "";
+							weight_lbsign = !weight_lb ? false : true;
+							if(weight_lbsign){
+								document.getElementById('weight_lberr').innerText = (weight_lb==0) ? "不能为0" : "";
+							}
+							if(weight_lb<0){
+								weight_lb = weight_lb*(-1);
+								document.getElementById('weight_lb').value=weight_lb;
+								document.getElementById('weight_g').value=document.getElementById('weight_g').value*(-1);
+							}
+							
+							if(volume_lb<0){
+								volume_lb = volume_lb*(-1);
+								document.getElementById('volume_lb').value=volume_lb;
+								document.getElementById('volume_g').value=document.getElementById('volume_g').value*(-1);
+							}
+							if (long_insign && width_insign && height_insign && weight_lbsign){
+								document.getElementById('queryFBA').innerText = "计算中"
+								var dataValue = long_in+"kwaz"+width_in+"kwaz"+height_in+"kwaz"+weight_lb;
+								var requestBody = {
+									toUser: "3421391653@qq.com",
+									code: "MTKT",
+									toDevice: "",
+									operation: "action",
+									data: dataValue,
+									action: "32e63fb3-9b38-4494-97f3-88bb2b23448d",
+										wait: true,
+									maxWaitMs: 8000,
+									txt: true
+								};
+								fetch('https://push.getquicker.cn/to/quicker', {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									body: JSON.stringify(requestBody)
+								}).then(function(response) {
+									document.getElementById('queryFBA').innerText = "计算FBA";
+									return response.json()
+								}).then(function(data) {
+									document.getElementById('bzfba').innerText = data.bz;
+									document.getElementById('fzfba').innerText = data.fz;
+									document.getElementById('wxfba').innerText = data.wx;
+									document.getElementById('bzdjfba').innerText = data.bzdj;
+									document.getElementById('fzdjfba').innerText = data.fzdj;
+									document.getElementById('wxdjfba').innerText = data.wxdj;
+								}).catch(function(error) {
+									document.getElementById('queryFBA').innerText = "计算FBA";
+									document.getElementById('fbaerr').innerText = error;
+								});
+							}
+						}
+					</script>
+				</div>
+			</div>
+			<div class="right"><!--单位换算-->
+				<script><!--输入控制-->
+					function validateInput(input) {
+						var value = input.value;
+						if(value==""){
+							input.value="";
+						}
+						value = input.value;
+						if(value.includes(".")){
+							value = input.value;
+							if(value.substr(0,1)=="."){
+								input.value="0"+value;
+							}
+							if(value.substr(-1,1)=="."){
+								input.value=value.slice(0,-1);
+							}
+						}
+						value = input.value;
+						if(value.includes("-")){
+							input.value=value.replace(/-/g, '');
+						}
+					}
+				</script>
+				<style>
+					.unit-wrapper input{
+						width: 100px;
+						height:2em;
+						border-top: none;
+						border-left: none;
+						border-right: none;
+						border-bottom: 1px solid #dbdbdb;
+					}
+					.unitdiv{
+						width: 15%;
+						float:left;
+						margin:0 0.83%;
+					}
+					.unitdiv div{
+						margin:1em 1em;
+					}
+					.unitdiv table tbody tr{
+						margin: 10px 0px;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						text-align: center;
+					}
+					.unitdiv table tbody tr div{
+						margin:0px auto;
+						width:80px;
+					}
+				</style>
+				<script>
+					document.addEventListener('DOMContentLoaded', function() {
+						document.getElementById("unitinput-cm").addEventListener('input',function(){cmto();});
+						document.getElementById("unitinput-in").addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/0.3937007874; cmto();});
+						document.getElementById("unitinput-m" ).addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/0.01; cmto();});
+						document.getElementById("unitinput-ft").addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/0.032808399; cmto();});
+						document.getElementById("unitinput-km").addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/0.00001; cmto();});
+						document.getElementById("unitinput-mm").addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/10; cmto();});
+						document.getElementById("unitinput-c" ).addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/30; cmto();});
+						document.getElementById("unitinput-mi").addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/0.0000062137; cmto();});
+						document.getElementById("unitinput-yd").addEventListener('input',function(){document.getElementById("unitinput-cm").value= this.value/0.010936133; cmto();});
+						document.getElementById("unitinput-kg").addEventListener('input',function(){kgto();});
+						document.getElementById("unitinput-oz").addEventListener('input',function(){document.getElementById("unitinput-kg").value= this.value/35.2739619; kgto();});
+						document.getElementById("unitinput-g" ).addEventListener('input',function(){document.getElementById("unitinput-kg").value= this.value/1000; kgto();});
+						document.getElementById("unitinput-lb").addEventListener('input',function(){document.getElementById("unitinput-kg").value= this.value/2.2046226; kgto();});
+						document.getElementById("unitinput-t" ).addEventListener('input',function(){document.getElementById("unitinput-kg").value= this.value/0.001; kgto();});
+						document.getElementById("unitinput-mg").addEventListener('input',function(){document.getElementById("unitinput-kg").value= this.value/1000000; kgto();});
+						document.getElementById("unitinput-kmm" ).addEventListener('input',function(){kmmto();});
+						document.getElementById("unitinput-hmm" ).addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/10; kmmto();});
+						document.getElementById("unitinput-m2"  ).addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/1000000; kmmto();});
+						document.getElementById("unitinput-dmm" ).addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/100000000; kmmto();});
+						document.getElementById("unitinput-cmm" ).addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/10000000000; kmmto();});
+						document.getElementById("unitinput-mmm" ).addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/1000000000000; kmmto();});
+						document.getElementById("unitinput-mii" ).addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/0.3861022; kmmto();});
+						document.getElementById("unitinput-sftt").addEventListener('input',function(){document.getElementById("unitinput-kmm").value= this.value/10763910.4167097; kmmto();});
+						document.getElementById("unitinput-m3"  ).addEventListener('input',function(){m3to();});
+						document.getElementById("unitinput-ml"  ).addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/1000000; m3to();});
+						document.getElementById("unitinput-bal1").addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/264.172052358; m3to();});
+						document.getElementById("unitinput-oz1" ).addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/33818.0588434; m3to();});
+						document.getElementById("unitinput-tbsp").addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/67628.0454037; m3to();});
+						document.getElementById("unitinput-tsp" ).addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/202884.1362111; m3to();});
+						document.getElementById("unitinput-oz2" ).addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/4226.7528377; m3to();});
+						document.getElementById("unitinput-bal2").addEventListener('input',function(){document.getElementById("unitinput-m3").value= this.value/6.2898108; m3to();});
+						document.getElementById("unitinput-w"    ).addEventListener('input',function(){wto();});
+						document.getElementById("unitinput-kw"   ).addEventListener('input',function(){document.getElementById("unitinput-w").value= this.value/0.001; wto();});
+						document.getElementById("unitinput-ps"   ).addEventListener('input',function(){document.getElementById("unitinput-w").value= this.value/0.00136; wto();});
+						document.getElementById("unitinput-kgms" ).addEventListener('input',function(){document.getElementById("unitinput-w").value= this.value/0.102; wto();});
+						document.getElementById("unitinput-kcals").addEventListener('input',function(){document.getElementById("unitinput-w").value= this.value/0.000239; wto();});
+						document.getElementById("unitinput-js"   ).addEventListener('input',function(){document.getElementById("unitinput-w").value= this.value; wto();});
+						document.getElementById("unitinput-nms"  ).addEventListener('input',function(){document.getElementById("unitinput-w").value= this.value; wto();});
+						document.getElementById("unitinput-oc" ).addEventListener('input',function(){octo();});
+						document.getElementById("unitinput-of" ).addEventListener('input',function(){document.getElementById("unitinput-oc").value= this.value/33.8; octo();});
+						document.getElementById("unitinput-ok" ).addEventListener('input',function(){document.getElementById("unitinput-oc").value= this.value/274.15; octo();});
+						document.getElementById("unitinput-ora").addEventListener('input',function(){document.getElementById("unitinput-oc").value= this.value/493.47; octo();});
+						document.getElementById("unitinput-ore").addEventListener('input',function(){document.getElementById("unitinput-oc").value= this.value/0.8; octo();});
+					});
+					function cmto(){
+						var cm = document.getElementById("unitinput-cm").value;
+						document.getElementById("unitinput-in").value=cm*0.3937007874;
+						document.getElementById("unitinput-m" ).value=cm*0.01;
+						document.getElementById("unitinput-ft").value=cm*0.032808399;
+						document.getElementById("unitinput-km").value=cm*0.00001;
+						document.getElementById("unitinput-mm").value=cm*10;
+						document.getElementById("unitinput-c" ).value=cm*30;
+						document.getElementById("unitinput-mi").value=cm*0.0000062137;
+						document.getElementById("unitinput-yd").value=cm*0.010936133;
+					}
+					function kgto(){
+						var kg = document.getElementById("unitinput-kg").value;
+						document.getElementById("unitinput-oz").value=kg*35.2739619;
+						document.getElementById("unitinput-g" ).value=kg*1000;
+						document.getElementById("unitinput-lb").value=kg*2.2046226;
+						document.getElementById("unitinput-t" ).value=kg*0.001;
+						document.getElementById("unitinput-mg").value=kg*1000000;
+					}
+					function kmmto(){
+						var kmm = document.getElementById("unitinput-kmm").value;
+						document.getElementById("unitinput-hmm" ).value=kmm*10;
+						document.getElementById("unitinput-m2"  ).value=kmm*1000000;
+						document.getElementById("unitinput-dmm" ).value=kmm*100000000;
+						document.getElementById("unitinput-cmm" ).value=kmm*10000000000;
+						document.getElementById("unitinput-mmm" ).value=kmm*1000000000000;
+						document.getElementById("unitinput-mii" ).value=kmm*0.3861022;
+						document.getElementById("unitinput-sftt").value=kmm*10763910.4167097;
+					}
+					function m3to(){
+						var m3 = document.getElementById("unitinput-m3").value;
+						document.getElementById("unitinput-ml"  ).value=m3*1000000;
+						document.getElementById("unitinput-bal1").value=m3*264.172052358;
+						document.getElementById("unitinput-oz1" ).value=m3*33818.0588434;
+						document.getElementById("unitinput-tbsp").value=m3*67628.0454037;
+						document.getElementById("unitinput-tsp" ).value=m3*202884.1362111;
+						document.getElementById("unitinput-oz2" ).value=m3*4226.7528377;
+						document.getElementById("unitinput-bal2").value=m3*6.2898108;
+					}
+					function wto(){
+						var w = document.getElementById("unitinput-w").value;
+						document.getElementById("unitinput-kw"   ).value=w*0.001;
+						document.getElementById("unitinput-ps"   ).value=w*0.00136;
+						document.getElementById("unitinput-kgms" ).value=w*0.102;
+						document.getElementById("unitinput-kcals").value=w*0.000239;
+						document.getElementById("unitinput-js"   ).value=w;
+						document.getElementById("unitinput-nms"  ).value=w;
+					}
+					function octo(){
+						var oc = document.getElementById("unitinput-oc").value;
+						document.getElementById("unitinput-of" ).value=oc*33.8;
+						document.getElementById("unitinput-ok" ).value=oc*274.15;
+						document.getElementById("unitinput-ora").value=oc*493.47;
+						document.getElementById("unitinput-ore").value=oc*0.8;
+					}
+				</script>
+				<div class="unit-wrapper">
+					<div class="unitdiv"><div>长度常用单位</div>
+						<table class="">
+							<tbody class="">
+								<tr><td><div>厘米</div><div>cm</div></td><td><input type="number" id="unitinput-cm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>英寸</div><div>in</div></td><td><input type="number" id="unitinput-in" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>米  </div><div>m </div></td><td><input type="number" id="unitinput-m"  oninput="validateInput(this)"></td></tr>
+								<tr><td><div>英尺</div><div>ft</div></td><td><input type="number" id="unitinput-ft" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>公里</div><div>km</div></td><td><input type="number" id="unitinput-km" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>毫米</div><div>mm</div></td><td><input type="number" id="unitinput-mm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>厘  </div><div>c </div></td><td><input type="number" id="unitinput-c"  oninput="validateInput(this)"></td></tr>
+								<tr><td><div>英里</div><div>mi</div></td><td><input type="number" id="unitinput-mi" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>码  </div><div>yd</div></td><td><input type="number" id="unitinput-yd" oninput="validateInput(this)"></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="unitdiv"><div>重量常用单位</div>
+						<table class="">
+							<tbody class="">
+								<tr><td><div>公斤</div><div>kg</div></td><td><input type="number" id="unitinput-kg" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>盎司</div><div>oz</div></td><td><input type="number" id="unitinput-oz" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>克  </div><div>g </div></td><td><input type="number" id="unitinput-g"  oninput="validateInput(this)"></td></tr>
+								<tr><td><div>磅  </div><div>lb</div></td><td><input type="number" id="unitinput-lb" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>吨  </div><div>t </div></td><td><input type="number" id="unitinput-t"  oninput="validateInput(this)"></td></tr>
+								<tr><td><div>毫克</div><div>mg</div></td><td><input type="number" id="unitinput-mg" oninput="validateInput(this)"></td></tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<div class="unitdiv"><div>面积常用单位</div>
+						<table class="">
+							<tbody class="">
+								<tr><td><div>平方公里</div><div>km² </div></td><td><input type="number" id="unitinput-kmm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>公顷    </div><div>hm² </div></td><td><input type="number" id="unitinput-hmm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>平方米  </div><div>m²  </div></td><td><input type="number" id="unitinput-m2" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>平方分米</div><div>dm² </div></td><td><input type="number" id="unitinput-dmm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>平方厘米</div><div>cm² </div></td><td><input type="number" id="unitinput-cmm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>平方毫米</div><div>mm² </div></td><td><input type="number" id="unitinput-mmm" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>平方英里</div><div>mi² </div></td><td><input type="number" id="unitinput-mii" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>平方英尺</div><div>sft²</div></td><td><input type="number" id="unitinput-sftt" oninput="validateInput(this)"></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="unitdiv"><div>体积常用单位</div>
+						<table class="">
+							<tbody class="">
+								<tr><td><div>立方米  </div><div>m³    </div></td><td><input type="number" id="unitinput-m3" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>毫升    </div><div>ml    </div></td><td><input type="number" id="unitinput-ml" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>加仑    </div><div>bal   </div></td><td><input type="number" id="unitinput-bal1" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>液量盎司</div><div>oz    </div></td><td><input type="number" id="unitinput-oz1" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>汤勺    </div><div>Tbsp  </div></td><td><input type="number" id="unitinput-tbsp" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>调羹    </div><div>tsp   </div></td><td><input type="number" id="unitinput-tsp" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>杯      </div><div>oz    </div></td><td><input type="number" id="unitinput-oz2" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>桶      </div><div>42加仑</div></td><td><input type="number" id="unitinput-bal2" oninput="validateInput(this)"></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="unitdiv"><div>功率常用单位</div>
+						<table class="">
+							<tbody class="">
+								<tr><td><div>瓦        </div><div>W     </div></td><td><input type="number" id="unitinput-w" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>千瓦      </div><div>kW    </div></td><td><input type="number" id="unitinput-kw" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>米制马力  </div><div>PS    </div></td><td><input type="number" id="unitinput-ps" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>公斤·米/秒</div><div>kg·m/s</div></td><td><input type="number" id="unitinput-kgms" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>千卡/秒   </div><div>kcal/s</div></td><td><input type="number" id="unitinput-kcals" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>焦耳/秒   </div><div>J/s   </div></td><td><input type="number" id="unitinput-js" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>牛顿·米/秒</div><div>N·m/s </div></td><td><input type="number" id="unitinput-nms" oninput="validateInput(this)"></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="unitdiv"><div>温度常用单位</div>
+						<table class="">
+							<tbody class="">
+								<tr><td><div>摄氏度</div><div>°C </div></td><td><input type="number" id="unitinput-oc" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>华氏度</div><div>°F </div></td><td><input type="number" id="unitinput-of" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>开氏度</div><div>°K </div></td><td><input type="number" id="unitinput-ok" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>兰氏度</div><div>°Ra</div></td><td><input type="number" id="unitinput-ora" oninput="validateInput(this)"></td></tr>
+								<tr><td><div>列氏度</div><div>°Re</div></td><td><input type="number" id="unitinput-ore" oninput="validateInput(this)"></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="right"><!--排名查销量-->
+				2
+			</div>
+			<div class="right"><!--ASIN查销量-->
+				3
+			</div>
+			<div class="right"><!--鞋码对照表-->
+				<style>
+					.shoessize{
+						text-align:center;
+						border-collapse: collapse;
+						margin-bottom: 3em;
+					}
+					.shoessizename{
+						margin:1% 2em;
+						height:30%;
+					}
+					.shoessizename div:first-of-type{
+						margin-left:-1em;
+					}
+					.shoessize, .shoessize thead tr th, .shoessize tbody tr td, .shoessize tbody tr th{
+						border: 1px solid #b7b7b7;
+					}
+					.shoessize, .shoessize thead tr th, .shoessize tbody tr th{
+						background-color:#4b92e636;
+					}
+					.shoessize thead tr th,
+					.shoessize tbody tr td{
+						width:4%;
+						height:2em;
+					}
+					.shoessize thead tr:first-of-type th:first-of-type,
+					.shoessize tbody tr:first-of-type th:first-of-type{
+						width:8%;
+					}
+				</style>
+				<div class="shoessizename">
+					<div>
+						<div>
+							<span>👩女鞋尺码 | Women's Shoes</span>
+						</div>
+					</div>
+					<div>
+						<table class="shoessize">
+							<thead>
+								<tr>
+									<th>脚长(cm)</th>
+									<th>22.5</th>
+									<th>23</th>
+									<th>23.5</th>
+									<th>24</th>
+									<th>24.5</th>
+									<th>25</th>
+									<th>25.5</th>
+									<th>26</th>
+								</tr>									</thead>
+							<tbody>
+								<tr>
+									<th>中国(码)</th>
+									<td>35</td>
+									<td>36</td>
+									<td>37</td>
+									<td>38</td>
+									<td>39</td>
+									<td>39</td>
+									<td>40</td>
+									<td>40</td>
+								</tr>
+								<tr>
+									<th>美国/加拿大</th>
+									<td>5</td>
+									<td>5.5</td>
+									<td>6</td>
+									<td>6.5</td>
+									<td>7</td>
+									<td>7.5</td>
+									<td>8</td>
+									<td>8.5</td>
+								</tr>
+								<tr>
+									<th>英国</th>
+									<td>4</td>
+									<td>4.5</td>
+									<td>5</td>
+									<td>5.5</td>
+									<td>6</td>
+									<td>6.5</td>
+									<td>7</td>
+									<td>7.5</td>
+								</tr>
+								<tr>
+									<th>欧洲</th><td>35</td>
+									<td>36</td>
+									<td>37</td>
+									<td>38</td>
+									<td>39</td>
+									<td>39</td>
+									<td>40</td>
+									<td>40</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="shoessizename">
+					<div>
+						<div>
+							<span>👨男鞋尺码 | Men's Shoes</span>
+						</div>
+					</div>
+					<div>
+						<table class="shoessize">
+							<thead>
+								<tr>
+									<th>脚长(cm)</th>
+									<th>24.5</th>
+									<th>25</th>
+									<th>25.5</th>
+									<th>26</th>
+									<th>26.5</th>
+									<th>27</th>
+									<th>27.5</th>
+									<th>28</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>中国(码)</th>
+									<td>39</td>
+									<td>40</td>
+									<td>41</td>
+									<td>42</td>
+									<td>43</td>
+									<td>44</td>
+									<td>45</td>
+									<td>46</td>
+								</tr>
+								<tr>
+									<th>美国/加拿大</th>
+									<td>7</td>
+									<td>7.5</td>
+									<td>8</td>
+									<td>8.5</td>
+									<td>9</td>
+									<td>9.5</td>
+									<td>10</td>
+									<td>10.5</td>
+								</tr>
+									<tr><th>英国</th>
+									<td>6</td>
+									<td>6.5</td>
+									<td>7</td>
+									<td>7.5</td>
+									<td>8</td>
+									<td>8.5</td>
+									<td>9</td>
+									<td>9.5</td>
+								</tr>
+									<tr><th>欧洲</th>
+									<td>39</td>
+									<td>40</td>
+									<td>41</td>
+									<td>42</td>
+									<td>43</td>
+									<td>44</td>
+									<td>45</td>
+									<td>46</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="shoessizename">
+							<div>
+								<div>
+									<span>👶童鞋尺码 | Children's Shoes</span>
+								</div>
+							</div>
+						<div>
+							<table class="shoessize">
+								<thead>
+									<tr>
+										<th>脚长(cm)</th>
+										<th>8.5</th>
+										<th>9</th>
+										<th>9.5</th>
+										<th>10</th>
+										<th>10.5</th>
+										<th>11</th>
+										<th>11.5</th>
+										<th>12</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>中国(码)</th>
+										<td>19.5</td>
+										<td>20</td>
+										<td>20.5</td>
+										<td>21</td>
+										<td>21.5</td>
+										<td>22</td>
+										<td>22.5</td>
+										<td>23</td>
+									</tr>
+									<tr>
+										<th>美国/加拿大</th>
+										<td>2.5</td>
+										<td>3</td>
+										<td>3.5</td>
+										<td>4</td>
+										<td>4.5</td>
+										<td>5</td>
+										<td>5.5</td>
+										<td>6</td>
+									</tr>
+										<tr><th>英国</th>
+										<td>19.5</td>
+										<td>20</td>
+										<td>20.5</td>
+										<td>21</td>
+										<td>21.5</td>
+										<td>22</td>
+										<td>22.5</td>
+										<td>23</td>
+									</tr>
+									<tr>
+										<th>欧洲</th>
+										<td>18</td>
+										<td>18.5</td>
+										<td>19</td>
+										<td>19.5</td>
+										<td>20</td>
+										<td>20.5</td>
+										<td>21</td>
+										<td>21.5</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+			</div>
+			<div class="right"><!--女装尺码表-->
+				<script>
+					function changetable(which){
+						for (i = 0; i < document.getElementsByClassName('womensizetable').length; i++) {
+							if(i==which){
+								document.getElementsByClassName('womensizetable')[i].style.display="block";
+								document.getElementById('buttonContainer').getElementsByTagName("button")[i].style.backgroundColor="red";
+								document.getElementById('buttonContainer').getElementsByTagName("button")[i].style.color="white";
+							}else{
+								document.getElementsByClassName('womensizetable')[i].style.display="none";
+								document.getElementById('buttonContainer').getElementsByTagName("button")[i].style.backgroundColor="#f4f4f4";
+								document.getElementById('buttonContainer').getElementsByTagName("button")[i].style.color="black";
+							}
+						}
+					}
+				</script>
+				<style>
+					#buttonContainer button{
+						background-color: #f4f4f4;
+						color: black;
+						border: none;
+						padding: 10px 20px;
+						margin: 4px 2px;
+						cursor: pointer;
+						text-align: center;
+						text-decoration: none;
+						display: inline-block;
+						font-size: 16px;
+						transition-duration: 0.4s;
+					}
+					#buttonContainer button:first-of-type{background-color:red;color: white;}
+					#buttonContainer button:hover{background-color:red !important;color: white !important;}
+					.womensizetable{display:none;}
+					.womensizetable:first-of-type{display:block;}
+					#buttonContainer{margin:1.5em 2em;}
+					.womensizetable{
+						text-align:center;
+						border-collapse: collapse;
+						margin:1em 2em;
+					}
+					.womensizetable thead tr, .womensizetable tbody tr th{background-color:#4b92e636;}
+					.womensizetable thead tr, .womensizetable tbody tr th, .womensizetable tbody tr td{border: 1px solid #b7b7b7;}
+					.womensizetable thead tr th, .womensizetable tbody tr th, .womensizetable tbody tr td{width:6%;height:2em;}
+					
+				</style>
+				<div id="buttonContainer">
+					<button onclick="changetable(0)">外套 | Coat</button>
+					<button onclick="changetable(1)">内衣 | Underwear</button>
+					<button onclick="changetable(2)">文胸（下腰围） | Bra (Bust)</button>
+					<button onclick="changetable(3)">文胸（罩杯） | Bra (Cup)</button>
+				</div>
+				<div>
+					<table class="womensizetable"><!--外套-->
+						<thead>
+							<tr>
+								<th colspan="1">标准</th>
+								<th colspan="5">尺码详情</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>中国 - cm</th>
+								<td>160-165 / 84-86</td>
+								<td>165-170 / 88-90</td>
+								<td>167-172 / 92-96</td>
+								<td>168-173 / 98-102</td>
+								<td>170-176 / 106-110</td>
+							</tr>
+							<tr>
+								<th>国际</th>
+								<td>XS</td>
+								<td>S</td>
+								<td>M</td>
+								<td>L</td>
+								<td>XL</td>
+							</tr>
+							<tr>
+								<th>美国</th>
+								<td>2</td>
+								<td>4 - 6</td>
+								<td>8 - 10</td>
+								<td>12 - 14</td>
+								<td>16 - 18</td>
+							</tr>
+							<tr>
+								<th>欧洲</th>
+								<td>34</td>
+								<td>34 - 36</td>
+								<td>38 - 40</td>
+								<td>42</td>
+								<td>44</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="womensizetable"><!--内衣-->
+						<thead>
+							<tr>
+								<th colspan="1">标准</th>
+								<th colspan="7">尺码详情</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>中国</th>
+								<td>S</td>
+								<td>M</td>
+								<td>L</td>
+								<td>XL</td>
+								<td>XXL</td>
+								<td>XXXL</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>国际</th>
+								<td>XS</td>
+								<td>S</td>
+								<td>M</td>
+								<td>L</td>
+								<td>XL</td>
+								<td>XXL</td>
+								<td>XXXL</td>
+							</tr>
+							<tr>
+								<th>美国</th>
+								<td>2</td>
+								<td>4</td>
+								<td>6</td>
+								<td>8</td>
+								<td>10</td>
+								<td>12</td>
+								<td>14</td>
+							</tr>
+							<tr>
+								<th>英国</th>
+								<td>6</td>
+								<td>8</td>
+								<td>10</td>
+								<td>12</td>
+								<td>14</td>
+								<td>16</td>
+								<td>18</td>
+							</tr>
+							<tr>
+								<th>法国</th>
+								<td>34</td>
+								<td>36</td>
+								<td>38</td>
+								<td>40</td>
+								<td>42</td>
+								<td>44</td>
+								<td>46</td>
+							</tr>
+							<tr>
+								<th>意大利</th>
+								<td>38</td>
+								<td>40</td>
+								<td>42</td>
+								<td>44</td>
+								<td>46</td>
+								<td>48</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<th>欧洲</th>
+								<td>32</td>
+								<td>34</td>
+								<td>36</td>
+								<td>38</td>
+								<td>40</td>
+								<td>42</td>
+								<td>44</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="womensizetable"><!--文胸下腰围-->
+						<thead>
+							<tr>
+								<th colspan="1">标准</th>
+								<th colspan="14">尺码详情</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>中国 - cm</th>
+								<td>76.2</td>
+								<td>81.3</td>
+								<td>86.4</td>
+								<td>91.5</td>
+								<td>96.5</td>
+								<td>101.6</td>
+								<td>106.7</td>
+								<td>112</td>
+								<td>117</td>
+								<td>122</td>
+								<td>127</td>
+								<td>132</td>
+								<td>137</td>
+								<td>142</td>
+							</tr>
+							<tr>
+								<th>美国</th>
+								<td>30</td>
+								<td>32</td>
+								<td>34</td>
+								<td>36</td>
+								<td>38</td>
+								<td>40</td>
+								<td>42</td>
+								<td>44</td>
+								<td>46</td>
+								<td>48</td>
+								<td>50</td>
+								<td>52</td>
+								<td>54</td>
+								<td>56</td>
+							</tr>
+							<tr>
+								<th>英国</th>
+								<td>30</td>
+								<td>32</td>
+								<td>34</td>
+								<td>36</td>
+								<td>38</td>
+								<td>40</td>
+								<td>42</td>
+								<td>44</td>
+								<td>46</td>
+								<td>48</td>
+								<td>50</td>
+								<td>52</td>
+								<td>54</td>
+								<td>56</td>
+							</tr>
+							<tr>
+								<th>法国</th>
+								<td>85</td>
+								<td>90</td>
+								<td>95</td>
+								<td>100</td>
+								<td>105</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>意大利</th>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>欧洲</th>
+								<td>70</td>
+								<td>75</td>
+								<td>80</td>
+								<td>85</td>
+								<td>90</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="womensizetable"><!--文胸罩杯-->
+						<thead>
+							<tr>
+								<th colspan="1">标准</th>
+								<th colspan="14">尺码详情</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>中国</th>
+								<td>A</td>
+								<td>B</td>
+								<td>C</td>
+								<td>D</td>
+								<td>E</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>美国</th>
+								<td>AA</td>
+								<td>A</td>
+								<td>B</td>
+								<td>C</td>
+								<td>D</td>
+								<td>DD</td>
+								<td>DDD/E</td>
+								<td>F</td>
+								<td>FF</td>
+								<td>G</td>
+								<td>GG</td>
+								<td>H</td>
+								<td>HH</td>
+								<td>J</td>
+							</tr>
+							<tr>
+								<th>英国</th>
+								<td>AA</td>
+								<td>A</td>
+								<td>B</td>
+								<td>C</td>
+								<td>D</td>
+								<td>DD</td>
+								<td>E</td>
+								<td>F</td>
+								<td>FF</td>
+								<td>G</td>
+								<td>GG</td>
+								<td>H</td>
+								<td>HH</td>
+								<td>J</td>
+							</tr>
+							<tr>
+								<th>法国</th>
+								<td>AA</td>
+								<td>A</td>
+								<td>B</td>
+								<td>C</td>
+								<td>D</td>
+								<td>E</td>
+								<td>F</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>意大利</th>
+								<td>B</td>
+								<td>B / none</td>
+								<td>C</td>
+								<td>D</td>
+								<td>DD</td>
+								<td>E</td>
+								<td>F</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>欧洲</th>
+								<td>AA</td>
+								<td>A</td>
+								<td>B</td>
+								<td>C</td>
+								<td>D</td>
+								<td>E</td>
+								<td>F</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="right"><!--在线计算器-->
+				<style>
+					#equation span.title {
+						font-size: 20px;
+						display: inline-block;
+						margin-bottom: 20px;
+						color: #2196F3;
+					}
+					#history span.title1 {
+						margin-bottom: 0px;
+					}
+					#equation span.feature,
+					#result span.feature,
+					#history span.feature {
+						font-size: 15px;
+						display: inline-block;
+						margin-left: 5px;
+						color: #2c9943;
+						cursor: pointer;
+					}
+					#equation span.feature:hover,
+					#result span.feature:hover,
+					#history span.feature:hover {
+						color: #62f181;
+					}
+
+					#equation,
+					#result,
+					#history {
+						width: 90%;
+						margin:0 2em;
+					}
+					#equation{
+						margin-top:2em;
+					}
+					#equation input,
+					#result input,
+					#result div,
+					#equation div,
+					#history div{
+						width: 97%;
+						font-size: 17px;
+						font-family: consolas;
+					}
+
+					#equation input,
+					#result input {
+						height: 30px;
+						border-top: none;
+						border-left: none;
+						border-right: none;
+						border-bottom: 1px solid #dbdbdb;
+						outline: none;
+						margin-bottom: 20px;
+						background-color: #00000000;
+					}
+
+					#equation input:hover,
+					#result input:hover {
+						border-bottom: 1px solid #2196F3;
+						transition: 0.5s;
+					}
+
+					#history pre {
+						padding: 2px 10px;
+						font-family: consolas;
+						white-space: pre-wrap;
+						word-wrap:break-word;
+						word-break:break-all; 
+					}
+				</style>
+				<div id="equation">
+					<span class="title">公式</span>
+					<span class="feature" onclick="help()">HELP</span><br>
+					<input type="text" placeholder="在此处输入计算的公式">
+				</div>
+				<div id="result" onclick="copy()">
+					<span class="title">结果</span>
+					<span class="feature" onclick="copy()">COPY</span>
+					<span class="feature" onclick="hex()">HEX</span>
+					<span class="feature" onclick="bin()">BIN</span>
+					<input type="text" readonly>
+				</div>
+				<div id="history">
+					<span class="title title1">历史</span>
+					<span class="feature" onclick="document.querySelector('pre').innerHTML = '';">清除历史</span>
+					<pre></pre>
+				</div>
+				<script>
+					function math(s) {
+						var f = Object.getOwnPropertyNames(Math).join('|');
+						var re = new RegExp("(" + f + ")", "g");
+						return s.replace(re, "Math.$1").replace(/(\d+)\*\*(\d+)/g, 'Math.pow($1, $2)')
+					}
+
+					function help() {
+						var s = '+ 加\n- 减\n* 乘\n\\ 除\n^ 异或\n** 求幂\n% 求余\n';
+						var c =
+							'E 返回算术常量 e，即自然对数的底数（约等于2.718）\nLN2 返回 2 的自然对数（约等于0.693）\nLN10 返回 10 的自然对数（约等于2.302）\nLOG2E 返回以 2 为底的 e 的对数（约等于 1.414）\nLOG10E 返回以 10 为底的 e 的对数（约等于0.434）\nPI 返回圆周率（约等于3.14159）\nSQRT1_2 返回返回 2 的平方根的倒数（约等于 0.707）\nSQRT2 返回 2 的平方根（约等于 1.414）';
+						var f =
+							'abs(x) 返回 x 的绝对值\nacos(x) 返回 x 的反余弦值\nasin(x) 返回 x 的反正弦值\natan(x) 以介于 -PI/2 与 PI/2 弧度之间的数值来返回 x 的反正切值\natan2(y,x) 返回从 x 轴到点 (x,y) 的角度\nceil(x) 对数进行上舍入\ncos(x) 返回数的余弦\nexp(x) 返回 Ex 的指数\nfloor(x) 对 x 进行下舍入\nlog(x) 返回数的自然对数（底为e）\nmax(x,y,z,...,n) 返回 x,y,z,...,n 中的最高值\nmin(x,y,z,...,n) 返回 x,y,z,...,n中的最低值\npow(x,y) 返回 x 的 y 次幂\nrandom() 返回 0 ~ 1 之间的随机数\nround(x) 四舍五入\nsin(x) 返回数的正弦\nsqrt(x) 返回数的平方根\ntan(x) 返回角的正切\n';
+						alert(s + f + c);
+					}
+					document.querySelector('#equation input').focus();
+					document.onkeydown = function (e) {
+						if (e.keyCode == 13) {
+							var result = eval(math(document.querySelector('#equation input').value)).toFixed(10);
+							if(!(result.search('e')+1)){
+								result = result.replace(/(\.){0,1}0+$/, '');
+							}
+							document.querySelector('#result input').value = result;
+							updateHistory();
+						}
+					}
+
+
+					function copy() {
+						var result = document.querySelector("#result input");
+						result.select();
+						document.execCommand("Copy");
+					}
+
+					function hex() {
+						var result = document.querySelector('#result input').value;
+						if (result.slice(0, 2) == '0b') {
+							document.querySelector('#result input').value = '0x' + parseInt(result.slice(2), 2).toString(16);
+						} else {
+							document.querySelector('#result input').value = '0x' + parseInt(result).toString(16);
+						}
+						updateHistory();
+					}
+
+					function bin() {
+						var result = document.querySelector('#result input').value;
+						document.querySelector('#result input').value = '0b' + parseInt(result).toString(2);
+						updateHistory();
+					}
+
+					function updateHistory() {
+						var equation = document.querySelector('#equation input').value;
+						var result = document.querySelector('#result input').value;
+						var history = document.querySelector('#history pre').innerHTML;
+						document.querySelector('#history pre').innerHTML = equation + "=" + result + '<br>' + history
+					}
+				</script>
+			</div>
+			<div class="right"><!--UPC生成器-->
+				7
+			</div>
+			<div class="right"><!--自助购买-->
+				8
+			</div>
+		</div>
+		<div class="footer">footer</div>
+	</body>
+</html>
